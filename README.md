@@ -82,13 +82,24 @@ Visualization
 
 ## References
 
+### Mathematics and ML
+
 - [3Blue1Brown — Linear Algebra](https://www.youtube.com/watch?v=fNk_zzaMoSs&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab)
 - [3Blue1Brown — Calculus](https://www.youtube.com/watch?v=NosYmlLLFB4&list=PLVUDmbpupCaqz8nECyVys-tFkUs--OKsY)
 - [DeepLearning.AI — Transformers in Practice](https://learn.deeplearning.ai/courses/transformers-in-practice/)
 - [Udacity — Agentic AI](https://www.udacity.com/course/agentic-ai--nd900)
 
+### CUDA and GPU programming
+
+- [An Even Easier Introduction to CUDA](https://developer.nvidia.com/blog/even-easier-introduction-cuda/) — first read
+- [CUDA Programming Guide](https://docs.nvidia.com/cuda/cuda-programming-guide/index.html) — reference
+- [CUDA Zone — Exercise Instructions (PDF)](https://www.nvidia.com/content/cudazone/download/Exercise_Instructions.pdf) — official labs → [exercises/cuda/](exercises/cuda/)
+- Notes hub: [notes/computer-systems/cuda/](notes/computer-systems/cuda/)
+
 ## Related documents
 
+- [COURSES.md](COURSES.md) — external courses mapped to repo paths
+- [CURRICULUM.md](CURRICULUM.md) — full index of notes and exercises
 - [ROADMAP.md](ROADMAP.md) — milestones and learning path
 - [PROGRESS.md](PROGRESS.md) — weekly progress log
 - [GLOSSARY.md](GLOSSARY.md) — vocabulary and notation

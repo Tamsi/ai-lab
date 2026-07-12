@@ -84,7 +84,14 @@ Interactive decision boundary laboratory.
 - [ ] Parallelism
 - [ ] Floating-point precision
 - [ ] Matrix multiplication performance
+- [ ] CUDA kernels (threads, blocks, memory spaces)
 - [ ] Profiling
+
+### References
+
+- [An Even Easier Introduction to CUDA](https://developer.nvidia.com/blog/even-easier-introduction-cuda/)
+- [CUDA Programming Guide](https://docs.nvidia.com/cuda/cuda-programming-guide/index.html)
+- [CUDA Zone exercises (PDF)](https://www.nvidia.com/content/cudazone/download/Exercise_Instructions.pdf) → [exercises/cuda/](exercises/cuda/)
 
 ### Capstone project
 
