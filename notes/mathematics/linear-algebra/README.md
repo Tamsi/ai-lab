@@ -4,12 +4,12 @@
 
 ## Topics
 
-- [Dot product](linear-algebra/dot-product.md)
-- [Matrix multiplication](linear-algebra/matrix-multiplication.md)
-- [Linear transformations](linear-algebra/linear-transformations.md)
-- [Norms and distances](linear-algebra/norms-and-distances.md)
-- [Eigenvalues and eigenvectors](linear-algebra/eigenvalues.md)
-- [Orthogonality and projections](linear-algebra/orthogonal-projections.md)
+- [Dot product](dot-product.md)
+- [Matrix multiplication](matrix-multiplication.md)
+- [Linear transformations](linear-transformations.md)
+- [Norms and distances](norms-and-distances.md)
+- [Eigenvalues and eigenvectors](eigenvalues.md)
+- [Orthogonality and projections](orthogonal-projections.md)
 
 ## External courses
 
