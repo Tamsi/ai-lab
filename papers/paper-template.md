@@ -8,6 +8,12 @@
 - Topic:
 - Status: first read / understood / reproduced
 
+## Concepts to deepen
+
+| Concept | Note | Exercise | Status |
+|---|---|---|---|
+| _(concept)_ | `notes/...` | `exercises/...` | not started |
+
 ## Problem
 
 What problem are the authors trying to solve?

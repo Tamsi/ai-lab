@@ -1,0 +1,14 @@
+{
+  "submissions": [
+    {
+      "exercise": "numpy/dot_product",
+      "status": "passed",
+      "timestamp": "2026-07-12T21:45:12.466859+00:00"
+    },
+    {
+      "exercise": "numpy/matrix_multiplication",
+      "status": "passed",
+      "timestamp": "2026-07-12T21:30:00+00:00"
+    }
+  ]
+}

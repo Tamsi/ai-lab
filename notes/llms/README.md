@@ -1,22 +1,28 @@
-# Llms
+# LLMs
 
-**Milestone:** Milestone 5: Transformers and LLMs
+How large language models work — from classical n-grams to post-training.
 
 ## Topics
 
-- [Tokenization](tokenization.md)
+### Foundations
+- [N-grams](n-grams.md) · exercise [ngrams_language_model](../../exercises/pytorch/ngrams_language_model/)
+- [Tokenization](tokenization.md) · exercise [tokenizer_bpe](../../exercises/pytorch/tokenizer_bpe/)
+
+### Architecture
 - [Embeddings](embeddings.md)
-- [Attention](attention.md)
-- [Transformer architecture](transformer.md)
+- [Attention](attention.md) · exercise [attention_scratch](../../exercises/pytorch/attention_scratch/)
+- [Transformer architecture](transformer.md) · exercise [transformer_block](../../exercises/pytorch/transformer_block/)
 - [Autoregressive training](autoregressive-training.md)
 
-## External courses
+### Post-training (paper-driven)
+- [Supervised fine-tuning (SFT)](supervised-fine-tuning.md) · exercise [sft_mini](../../exercises/pytorch/sft_mini/) · paper [2606.18089](../../papers/llms/2026-compositional-generalization-sft-rl.md)
+- [RL post-training](rl-post-training.md) · exercise [rl_policy_gradient_cartpole](../../exercises/pytorch/rl_policy_gradient_cartpole/)
 
-- See [COURSES.md](../../COURSES.md)
+## Papers queue
 
-## How to study a topic
+[papers/READING-QUEUE.md](../../papers/READING-QUEUE.md)
 
-1. Read intuition section in the concept note
-2. Complete the linked exercise
-3. Record benchmarks or plots in `results.md`
-4. Update [GLOSSARY.md](../../GLOSSARY.md) and [PROGRESS.md](../../PROGRESS.md)
+## Courses
+
+- [Transformers in Practice](https://learn.deeplearning.ai/courses/transformers-in-practice/)
+- [Karpathy — Zero to Hero](https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ)

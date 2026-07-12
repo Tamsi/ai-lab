@@ -1,22 +1,19 @@
 # Deep Learning
 
-**Milestone:** Milestone 3: Neural networks
+Neural networks, tensors, and classical architectures (CNN, RNN) before Transformers.
 
 ## Topics
 
-- [Neurons and layers](neurons-and-layers.md)
+- [Tensors](tensors.md) · exercise [tensor_basics](../../exercises/pytorch/tensor_basics/)
+- [Neurons and layers](neurons-and-layers.md) · exercise [mlp_from_scratch](../../exercises/pytorch/mlp_from_scratch/)
 - [Backpropagation](backpropagation.md)
 - [Activation functions](activation-functions.md)
-- [Initialization](weight-initialization.md)
+- [CNN](cnn.md) · exercise [cnn_conv2d](../../exercises/pytorch/cnn_conv2d/)
+- [RNN](rnn.md) · exercise [rnn_sequence](../../exercises/pytorch/rnn_sequence/)
+- [Weight initialization](weight-initialization.md)
 - [Normalization](normalization.md)
 
-## External courses
+## Courses
 
-- See [COURSES.md](../../COURSES.md)
-
-## How to study a topic
-
-1. Read intuition section in the concept note
-2. Complete the linked exercise
-3. Record benchmarks or plots in `results.md`
-4. Update [GLOSSARY.md](../../GLOSSARY.md) and [PROGRESS.md](../../PROGRESS.md)
+- [d2l.ai](https://d2l.ai/)
+- [Michael Nielsen — NN&DL](http://neuralnetworksanddeeplearning.com/)

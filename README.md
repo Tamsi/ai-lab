@@ -1,84 +1,65 @@
 # AI Foundations Lab
 
-A public learning laboratory dedicated to understanding modern artificial
-intelligence from mathematics to hardware.
+A public learning laboratory focused on **math for AI**, **CUDA**, and **how LLMs work**
+— with supporting tracks in ML, RL, CNNs, RNNs, and tensors.
 
-The goal is not only to use machine learning libraries, but to understand:
+**Start here:** [FOCUS.md](FOCUS.md) · [EXERCISES.md](exercises/EXERCISES.md) · [papers/READING-QUEUE.md](papers/READING-QUEUE.md)
 
-- the mathematics behind machine learning;
-- how neural networks learn;
-- how Transformers and LLMs work;
-- how hardware constraints shape model architectures;
-- how reinforcement learning and world models operate;
-- how to read and reproduce AI research papers.
+## Learning pillars
+
+| Pillar | What you build |
+|---|---|
+| **Math for AI** | Linear algebra, probability, optimization, softmax/cross-entropy |
+| **CUDA** | Kernels, memory, GPU matmul |
+| **LLMs** | N-grams → tokenization → attention → Transformer → SFT → RL post-training |
+
+## Supporting tracks
+
+Tensors · ML basics · CNN · RNN · Reinforcement learning
+
+Full concept map: [CONCEPTS.md](CONCEPTS.md)
+
+## Paper-driven learning
+
+Read papers on [alphaXiv](https://www.alphaxiv.org/), list concepts to deepen, link to notes and exercises.
+
+Example: [2606.18089](https://www.alphaxiv.org/abs/2606.18089) → SFT, RL, n-grams → [paper sheet](papers/llms/2026-compositional-generalization-sft-rl.md)
+
+## Submit exercises
+
+```bash
+pip install numpy pytest matplotlib
+python scripts/submit.py numpy/dot_product
+```
+
+See [exercises/SUBMISSION.md](exercises/SUBMISSION.md).
 
 ## Learning principle
 
-Every important concept should be explored through four layers:
-
-1. **Intuition** — what does it mean geometrically or conceptually?
-2. **Mathematics** — formal definitions and derivations
-3. **Implementation** — code from scratch (or minimal dependencies)
-4. **Experimentation** — plots, benchmarks, and observed behavior
-
-Each layer connects through a simple triangle:
+Every concept: **Intuition → Math → Code → Experiment**
 
 ```text
-   Equation
-      ↕
-    Code
-      ↕
-Visualization
+   Equation  ↔  Code  ↔  Visualization
 ```
-
-## Current focus
-
-- [x] Repository structure and learning workflow
-- [ ] Mathematical foundations
-- [ ] Linear algebra
-- [ ] Probability and statistics
-- [ ] Computer architecture
-- [ ] Machine learning from scratch
-- [ ] Deep learning
-- [ ] Transformers and LLMs
-- [ ] GPU programming
-- [ ] Reinforcement learning
-- [ ] World models
 
 ## Main projects
 
 | Project | Goal | Status |
 |---|---|---|
-| [Gradient Playground](projects/gradient-playground/) | Visualize optimization algorithms | Planned |
-| [Tiny Autograd](projects/tiny-autograd/) | Implement automatic differentiation | Planned |
-| [Mini Transformer](projects/mini-transformer/) | Build a small language model | Planned |
-| [GPU Matmul Lab](projects/gpu-matmul-lab/) | Compare CPU and GPU matrix operations | Planned |
-| [Latent World Model](projects/latent-world-model/) | Predict environment dynamics | Planned |
+| [Gradient Playground](projects/gradient-playground/) | Visualize optimization | Planned |
+| [Mini Transformer](projects/mini-transformer/) | Small language model | Planned |
+| [GPU Matmul Lab](projects/gpu-matmul-lab/) | CPU vs GPU matmul | Planned |
+| [Tiny Autograd](projects/tiny-autograd/) | Autograd engine | Planned |
 
 ## Repository map
 
 | Directory | Purpose |
 |---|---|
-| `notes/` | Concept notes (intuition → math → ML relevance) |
-| `exercises/` | Hands-on exercises with tests and reflection |
-| `implementations/` | Standalone algorithm implementations |
-| `experiments/` | Benchmarks and visual explorations |
-| `papers/` | Paper reading sheets |
-| `projects/` | Progressive portfolio projects |
-| `assets/` | Diagrams and plots |
-| `tests/` | Shared test utilities |
-
-## Weekly rhythm (~8 h/week)
-
-| Activity | Time |
-|---|---|
-| Course or reading | 2 h |
-| Math exercises | 2 h |
-| Implementation | 2 h |
-| Paper (alphaXiv) | 1 h |
-| Documentation and review | 1 h |
-
-**Minimum weekly output:** one concept note, one implemented exercise, one plot or benchmark, one entry in [PROGRESS.md](PROGRESS.md).
+| `notes/` | Concept notes |
+| `exercises/` | Exercises + [submission registry](exercises/submissions/registry.json) |
+| `papers/` | [Reading queue](papers/READING-QUEUE.md) + paper sheets |
+| `projects/` | Portfolio projects |
+| `scripts/submit.py` | Verify exercise submissions |
 
 ## References
 
@@ -87,19 +68,18 @@ Visualization
 - [3Blue1Brown — Linear Algebra](https://www.youtube.com/watch?v=fNk_zzaMoSs&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab)
 - [3Blue1Brown — Calculus](https://www.youtube.com/watch?v=NosYmlLLFB4&list=PLVUDmbpupCaqz8nECyVys-tFkUs--OKsY)
 - [DeepLearning.AI — Transformers in Practice](https://learn.deeplearning.ai/courses/transformers-in-practice/)
-- [Udacity — Agentic AI](https://www.udacity.com/course/agentic-ai--nd900)
+- [Karpathy — Neural Networks: Zero to Hero](https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ)
 
-### CUDA and GPU programming
+### CUDA
 
-- [An Even Easier Introduction to CUDA](https://developer.nvidia.com/blog/even-easier-introduction-cuda/) — first read
-- [CUDA Programming Guide](https://docs.nvidia.com/cuda/cuda-programming-guide/index.html) — reference
-- [CUDA Zone — Exercise Instructions (PDF)](https://www.nvidia.com/content/cudazone/download/Exercise_Instructions.pdf) — official labs → [exercises/cuda/](exercises/cuda/)
-- Notes hub: [notes/computer-systems/cuda/](notes/computer-systems/cuda/)
+- [An Even Easier Introduction to CUDA](https://developer.nvidia.com/blog/even-easier-introduction-cuda/)
+- [CUDA Programming Guide](https://docs.nvidia.com/cuda/cuda-programming-guide/index.html)
+- [CUDA Zone Exercises (PDF)](https://www.nvidia.com/content/cudazone/download/Exercise_Instructions.pdf)
 
-## Related documents
+## Documents
 
-- [COURSES.md](COURSES.md) — external courses mapped to repo paths
-- [CURRICULUM.md](CURRICULUM.md) — full index of notes and exercises
-- [ROADMAP.md](ROADMAP.md) — milestones and learning path
-- [PROGRESS.md](PROGRESS.md) — weekly progress log
-- [GLOSSARY.md](GLOSSARY.md) — vocabulary and notation
+- [FOCUS.md](FOCUS.md) — your priorities
+- [CONCEPTS.md](CONCEPTS.md) — notions to learn
+- [EXERCISES.md](exercises/EXERCISES.md) — exercise catalog + verify commands
+- [COURSES.md](COURSES.md) — external courses
+- [PROGRESS.md](PROGRESS.md) — weekly log
