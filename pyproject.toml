@@ -1,35 +1,13 @@
 [project]
-name = "ai-foundations-lab"
+name = "ai-lab"
 version = "0.1.0"
-description = "A public learning laboratory for AI foundations — math to hardware"
-readme = "README.md"
 requires-python = ">=3.11"
-dependencies = [
-    "numpy>=1.26",
-    "matplotlib>=3.8",
-]
+dependencies = ["numpy>=1.26"]
 
 [project.optional-dependencies]
-dev = [
-    "pytest>=8.0",
-    "pytest-cov>=5.0",
-]
-torch = [
-    "torch>=2.2",
-]
-sympy = [
-    "sympy>=1.12",
-]
-all = [
-    "pytest>=8.0",
-    "pytest-cov>=5.0",
-    "torch>=2.2",
-    "sympy>=1.12",
-]
+dev = ["pytest>=8.0"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests", "exercises"]
-pythonpath = ["."]
 addopts = "-v --tb=short --import-mode=importlib"
 
 [build-system]
