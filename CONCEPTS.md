@@ -7,10 +7,10 @@ new appears — no need to plan everything upfront.
 |---|---|---|---|---|
 | [x] | Dot product | Linear algebra | [dot-product](notes/concepts/dot-product.md) | [dot-product](exercises/dot-product/) |
 | [x] | Matrix multiplication | Linear algebra | [matrix-multiplication](notes/concepts/matrix-multiplication.md) | [matrix-multiplication](exercises/matrix-multiplication/) |
-| [ ] | SFT | [arxiv 2606.18089](https://www.alphaxiv.org/abs/2606.18089) | | |
-| [ ] | RL post-training | [arxiv 2606.18089](https://www.alphaxiv.org/abs/2606.18089) | | |
-| [ ] | N-grams | [arxiv 2606.18089](https://www.alphaxiv.org/abs/2606.18089) | | |
-| [ ] | Attention | Paper « Attention Is All You Need » | | |
+| [ ] | SFT | [paper 2606.18089](papers/2606.18089-compositional-generalization.md) | | |
+| [ ] | RL post-training | [paper 2606.18089](papers/2606.18089-compositional-generalization.md) | | |
+| [ ] | N-grams | [paper 2606.18089](papers/2606.18089-compositional-generalization.md) | | |
+| [ ] | Attention | [paper 1706.03762](papers/1706.03762-attention-is-all-you-need.md) | | |
 | [ ] | Tensors | PyTorch / CUDA | | |
 | [ ] | CNN | Deep learning | | |
 | [ ] | RNN | Deep learning | | |
