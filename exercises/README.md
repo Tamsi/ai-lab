@@ -1,27 +1,29 @@
 # Exercises
 
-## Subjects
+Subjects to implement. Full list with resources → [topics/](../topics/).
 
-List of things to implement. Create a folder only when you start one.
-
-| Status | Subject | Folder | Verify |
+| Status | Subject | Topic sheet | Folder |
 |---|---|---|---|
-| [x] | Dot product from scratch | [dot-product/](dot-product/) | `pytest exercises/dot-product` |
-| [x] | Matrix multiplication (loops + NumPy bench) | [matrix-multiplication/](matrix-multiplication/) | `pytest exercises/matrix-multiplication` |
-| [ ] | N-gram language model | _(create `n-grams/` when ready)_ | |
-| [ ] | Softmax + cross-entropy | | |
-| [ ] | Gradient descent visualization | | |
-| [ ] | Scaled dot-product attention | | |
-| [ ] | Minimal SFT loop | | |
-| [ ] | CUDA vector add | | |
+| [x] | Dot product | [dot-product](../topics/dot-product.md) | [dot-product/](dot-product/) |
+| [x] | Matrix multiplication | [matrix-multiplication](../topics/matrix-multiplication.md) | [matrix-multiplication/](matrix-multiplication/) |
+| [ ] | Gradient descent | [gradient-descent](../topics/gradient-descent.md) | _(create folder)_ |
+| [ ] | Linear regression | [supervised-learning](../topics/supervised-learning.md) | _(create folder)_ |
+| [ ] | N-grams | [n-grams](../topics/n-grams.md) | _(create folder)_ |
+| [ ] | Attention | [attention](../topics/attention.md) | _(create folder)_ |
+| [ ] | Encoder–decoder | [encoder-decoder](../topics/encoder-decoder.md) | _(create folder)_ |
+| [ ] | Mini SFT | [sft](../topics/sft.md) | _(create folder)_ |
 
-## Folder layout (when you start an exercise)
+## Folder layout
 
 ```text
 exercises/<subject>/
-├── solution.py       ← your code
-├── test_*.py         ← tests (copy from dot-product/)
-└── results.md        ← what you observed (optional)
+├── solution.py
+├── test_*.py
+└── results.md      # optional
 ```
 
-Copy [dot-product/](dot-product/) as a starting point.
+Copy [dot-product/](dot-product/) when starting a new one.
+
+```bash
+pytest exercises/<subject>
+```
