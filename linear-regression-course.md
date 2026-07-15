@@ -1,361 +1,482 @@
 # Linear Regression Course
 
-### ft_linear_regression · handwritten-style notes
+### ft_linear_regression · full tutorial (formulas & steps only)
+
+This document is a **course / tutorial** for the 42 project `ft_linear_regression`.  
+It contains **no code** — only concepts, formulas, and the steps to follow.
 
 ---
 
-## Introduction
+# Part 0 — What you are building
 
-You have a `data.csv` file with **24 cars**. For each one you know:
+You have a CSV file (`data.csv`) with cars:
 
-- its **mileage** (km)
-- its **price** (€)
+| Column | Meaning | Role in ML |
+|--------|---------|------------|
+| `km` | mileage | **feature** \(x\) — input |
+| `price` | price in € | **target** \(y\) — what you want to predict |
 
-**Question:** how do you predict the price of a car when you only know its mileage?
+**Goal:** given a mileage, estimate the price of a car.
 
-This is a **linear regression** problem: find a relationship between two values. Here, a **line** linking km and price.
+You must build **two programs**:
 
----
-
-# Chapter 1 — The model: a line
-
-## 1.1 The idea
-
-On a graph, each car is a point:
-
-```text
-price (€)
-  ↑
-  |    ·
-  |  ·   ·
-  |·       ·
-  |___________→ km
-```
-
-You look for the **line** that passes "through the middle" of those points. That line is your **model**.
-
-## 1.2 The formula
-
-A line is always:
-
-```
-estimated_price = θ0 + θ1 × km
-```
-
-**θ0** (theta zero) = **intercept**
-→ the price when km = 0 (base value of the line)
-
-**θ1** (theta one) = **slope**
-→ how much the price changes when km increases by 1
-
-**Example:** if θ0 = 8000 and θ1 = −0.02:
-
-- car at 0 km → 8000 + (−0.02 × 0) = **8000 €**
-- car at 100 000 km → 8000 + (−0.02 × 100000) = **6000 €**
-- car at 200 000 km → 8000 + (−0.02 × 200000) = **4000 €**
-
-A negative θ1 means: more km → lower price. That makes sense.
-
-## 1.3 Vocabulary
-
-| French | English | Symbol |
-|--------|---------|--------|
-| Variable d'entrée | Feature | x (km) |
-| Variable à prédire | Target | y (price) |
-| Prédiction | Prediction / Hypothesis | ŷ |
-| Paramètres du modèle | Parameters / Weights | θ0 and θ1 |
-
-The formula ŷ = θ0 + θ1·x is called the **hypothesis**: what your model **predicts**.
+1. **Training** — learn parameters from the dataset  
+2. **Prediction** — use those parameters to answer: “how much for this km?”
 
 ---
 
-# Chapter 2 — The problem: we do not know θ0 and θ1
+# Part 1 — Vocabulary (learn these words)
 
-At the start, **you do not know** which numbers to put in the formula.
+## 1.1 Linear regression
 
-You could guess θ0 = 5000, θ1 = −0.01… but that would be random.
+A method that predicts a number \(y\) using a **straight line**:
 
-**Solution:** let the computer (or you, by hand) **learn** the right values by looking at the 24 cars in the dataset.
+\[
+\hat{y} = \theta_0 + \theta_1 \cdot x
+\]
 
-That is **training**.
-
-Initialize:
-
-```
-θ0 = 0
-θ1 = 0
-```
-
-With that, the model predicts **0 €** for every car. Wrong, but it is the starting point.
+Here: predict **price** from **mileage**.
 
 ---
 
-# Chapter 3 — Measuring error
+## 1.2 Feature and target
 
-## 3.1 Error on one car
-
-For car i:
-
-```
-error = prediction − real_price
-error = (θ0 + θ1 × km) − price
-```
-
-**Example** (θ0=0, θ1=0, car at 240 000 km, real price 3650 €):
-
-- prediction = 0
-- error = 0 − 3650 = **−3650**
-
-**Negative error** → you **underestimated** (you said too low).
-
-**Positive error** → you **overestimated**.
-
-## 3.2 Error on the whole dataset: MSE
-
-We do not look at one car only. We want a **global error** over all 24.
-
-We use the **Mean Squared Error** (MSE):
-
-```
-J(θ0, θ1) = (1/m) × Σ (prediction_i − price_i)²
-```
-
-where **m = 24** (number of cars).
-
-**Why square?**
-
-- an error of +100 and −100 count the same
-- big errors are penalized more than small ones
-
-**J(θ)** is the **cost function**: one number that says if your model is good or bad.
-
-- **large J** → bad model
-- **small J** → good model
-
-**Training goal:** find θ0 and θ1 that make **J as small as possible**.
+| Name | Symbol | In this project |
+|------|--------|-----------------|
+| Feature (input) | \(x\) | mileage (`km`) |
+| Target (label) | \(y\) | real price |
+| Prediction | \(\hat{y}\) or \(h_\theta(x)\) | estimated price |
 
 ---
 
-# Chapter 4 — Gradient descent
+## 1.3 Hypothesis
 
-## 4.1 The idea
+The formula your model uses to predict:
 
-Imagine J(θ) is a **valley**. You are at the top. You want to reach the lowest point (the minimum).
+\[
+h_\theta(x) = \theta_0 + \theta_1 \cdot x
+\]
 
-**Gradient descent** means: at each step, look at which direction the slope goes up, and **walk the other way**.
+Also written in the subject as:
+
+\[
+\text{estimatePrice}(\text{mileage}) = \theta_0 + \theta_1 \cdot \text{mileage}
+\]
+
+---
+
+## 1.4 Parameters: \(\theta_0\) and \(\theta_1\)
+
+These are the **two numbers the model learns**.
+
+| Symbol | ML name | Everyday meaning |
+|--------|---------|------------------|
+| \(\theta_0\) | **bias** / intercept | price when \(x = 0\) (base value) |
+| \(\theta_1\) | **weight** / slope | how much price changes when km increases by 1 |
+
+Equivalence with the classic ML writing \(y = wx + b\):
+
+| Subject notation | Classic ML |
+|------------------|------------|
+| \(\theta_0\) | \(b\) (bias) |
+| \(\theta_1\) | \(w\) (weight) |
+
+**Example intuition:**
+
+- \(\theta_0 \approx 8500\) → a car with 0 km would be worth about 8500 € on this line  
+- \(\theta_1 \approx -0.02\) → each extra km lowers the price by about 0.02 €  
+- Negative \(\theta_1\) is expected: more km → cheaper car
+
+**Before training**, the subject requires:
+
+\[
+\theta_0 = 0, \quad \theta_1 = 0
+\]
+
+So at the start, every prediction is \(0\).
+
+---
+
+## 1.5 Error (residual)
+
+For one car:
+
+\[
+\text{error} = h_\theta(x) - y = (\theta_0 + \theta_1 \cdot x) - y
+\]
+
+| Sign | Meaning |
+|------|---------|
+| error \(> 0\) | prediction too high |
+| error \(< 0\) | prediction too low |
+| error \(= 0\) | perfect on that example |
+
+---
+
+## 1.6 Squared error
+
+\[
+\text{squared error} = (h_\theta(x) - y)^2
+\]
+
+Why square?
+
+- \(+100\) and \(-100\) count the same  
+- large mistakes are penalized more than small ones  
+
+---
+
+## 1.7 Cost function / MSE (Mean Squared Error)
+
+Global quality of the model on **all** \(m\) examples:
+
+\[
+J(\theta_0, \theta_1) = \frac{1}{m} \sum_{i=0}^{m-1} \bigl(h_\theta(x^{(i)}) - y^{(i)}\bigr)^2
+\]
+
+| \(J\) | Meaning |
+|-------|---------|
+| Large | bad model |
+| Small | good model |
+
+**Training goal:** find \(\theta_0, \theta_1\) that **minimize** \(J\).
+
+In this project, \(m = 24\) (number of cars in `data.csv`).
+
+---
+
+## 1.8 Gradient descent
+
+Algorithm that minimizes \(J\) by updating \(\theta_0\) and \(\theta_1\) little by little.
+
+Imagine \(J\) as a valley. You are at the top. At each step you walk downhill.
 
 ```text
 J(θ)
   ↑
-  |  You are here
-  |    \
-  |     \  ← you go down
-  |      \___
-  |          ‾‾‾ minimum
-  +────────────→ θ
+  |  start
+  |   \
+  |    \___
+  |        ‾‾‾ minimum  ← goal
+  +──────────────→ θ
 ```
-
-## 4.2 Learning rate (α)
-
-Each step has a size: **α** (learning rate).
-
-- α **too large** → you jump over the minimum and diverge
-- α **too small** → you move too slowly
-- α **well chosen** → you converge to the right θ0 and θ1
-
-On this project, km values are large (up to 240 000), so α must be **very small** (often around 10⁻⁷ to 10⁻¹⁰).
-
-## 4.3 Update formulas (42 subject)
-
-**Step 1** — For each car, compute prediction and error.
-
-**Step 2** — Sum over all 24 cars:
-
-```
-S1 = Σ (prediction_i − price_i)
-S2 = Σ (prediction_i − price_i) × km_i
-```
-
-**Step 3** — Compute corrections:
-
-```
-tmp_θ0 = α × (1/m) × S1
-tmp_θ1 = α × (1/m) × S2
-```
-
-**Step 4** — Update **at the same time**:
-
-```
-θ0 ← θ0 − tmp_θ0
-θ1 ← θ1 − tmp_θ1
-```
-
-**Important:** compute both `tmp` values with the **old** θ0 and θ1, then replace both at once.
-
-**Step 5** — Repeat thousands of times until θ0 and θ1 stabilize.
 
 ---
 
-# Chapter 5 — Handwritten example (3 cars)
+## 1.9 Learning rate (\(\alpha\))
 
-To simplify, use 3 cars instead of 24:
+Size of each step in gradient descent.
 
-| Car | km | Real price |
-|-----|-----|------------|
-| A | 240 000 | 3 650 € |
-| B | 139 800 | 3 800 € |
-| C | 22 899 | 7 990 € |
+| \(\alpha\) too small | \(\alpha\) too large | \(\alpha\) good |
+|----------------------|----------------------|-----------------|
+| \(J\) barely decreases | \(\theta\) explode → `nan` | \(J\) decreases steadily |
+| needs huge iterations | diverges | converges |
 
-**Start:** θ0 = 0, θ1 = 0, α = 0.0000001, m = 3
+**Rule of thumb while debugging:**
 
-### Iteration 1
-
-**Car A** (240 000 km, 3650 €)
-
-- prediction = 0 + 0 × 240000 = **0**
-- error = 0 − 3650 = **−3650**
-- error × km = −3650 × 240000 = **−876 000 000**
-
-**Car B** (139 800 km, 3800 €)
-
-- prediction = **0**
-- error = **−3800**
-- error × km = **−531 240 000**
-
-**Car C** (22 899 km, 7990 €)
-
-- prediction = **0**
-- error = **−7990**
-- error × km = **−182 963 010**
-
-**Sums:**
-
-- S1 = (−3650) + (−3800) + (−7990) = **−15 440**
-- S2 ≈ **−1 590 203 010**
-
-**Corrections:**
-
-- tmp_θ0 = 0.0000001 × (1/3) × (−15440) ≈ **−0.000515**
-- tmp_θ1 = 0.0000001 × (1/3) × (−1.59×10⁹) ≈ **−53**
-
-**New θ:**
-
-- θ0 = 0 − (−0.000515) = **0.000515**
-- θ1 = 0 − (−53) = **53**
-
-After 1 iteration, the model still predicts badly, but θ has **started** to move.
-
-### Iteration 2
-
-Restart with θ0 ≈ 0.0005 and θ1 ≈ 53.
-
-**Car A:**
-
-- prediction = 0.0005 + 53 × 240000 = **12 720 000** ← huge!
-- error = 12 720 000 − 3650 = **+12 716 350**
-
-θ1 = 53 is far too large. That is why α must be very small and you need many iterations.
-
-After tens of thousands of iterations with a good α, you should get something like:
-
-- **θ0 ≈ 8 000**
-- **θ1 ≈ −0.02**
-
-Then predictions become consistent.
+- cost stuck → increase \(\alpha\)  
+- cost becomes `nan` → decrease \(\alpha\)  
 
 ---
 
-# Chapter 6 — The two project phases
+## 1.10 Iteration / epoch
 
-## Phase A — Training (once)
+One full pass over the dataset to compute errors and update \(\theta_0, \theta_1\).
+
+You typically repeat this thousands or hundreds of thousands of times.
+
+Do **not** confuse:
+
+| Concept | Meaning |
+|---------|---------|
+| \(m\) | number of examples (cars) |
+| iterations | how many times you update \(\theta\) |
+
+---
+
+## 1.11 Normalization (feature scaling)
+
+Not mandatory in the subject PDF, but often **necessary in practice** because raw km values are huge (tens/hundreds of thousands).
+
+That makes \(\theta_1\)'s gradient enormous and \(\theta_0\)'s tiny → hard to pick one learning rate.
+
+**Min-max normalization:**
+
+\[
+x_{\text{norm}} = \frac{x - x_{\min}}{x_{\max} - x_{\min}}
+\]
+
+Then every mileage is in \([0, 1]\).
+
+You train on \(x_{\text{norm}}\), then convert \(\theta\) back so prediction still uses raw km (see Part 4).
+
+---
+
+# Part 2 — Formulas of the subject (mandatory)
+
+## 2.1 Hypothesis
+
+\[
+h_\theta(x) = \theta_0 + \theta_1 \cdot x
+\]
+
+## 2.2 Gradient descent updates (simultaneous)
+
+\[
+\text{tmp\_}\theta_0 = \alpha \cdot \frac{1}{m} \sum_{i=0}^{m-1} \bigl(h_\theta(x^{(i)}) - y^{(i)}\bigr)
+\]
+
+\[
+\text{tmp\_}\theta_1 = \alpha \cdot \frac{1}{m} \sum_{i=0}^{m-1} \bigl(h_\theta(x^{(i)}) - y^{(i)}\bigr) \cdot x^{(i)}
+\]
+
+\[
+\theta_0 := \theta_0 - \text{tmp\_}\theta_0
+\]
+
+\[
+\theta_1 := \theta_1 - \text{tmp\_}\theta_1
+\]
+
+**Critical rule:** compute both `tmp` values with the **old** \(\theta_0, \theta_1\), then update both at once.
+
+These `tmp` terms come from the derivatives (gradients) of the cost:
+
+\[
+\frac{\partial J}{\partial \theta_0} = \frac{1}{m} \sum (h - y)
+\]
+
+\[
+\frac{\partial J}{\partial \theta_1} = \frac{1}{m} \sum (h - y) \cdot x
+\]
+
+---
+
+# Part 3 — Training steps (Phase A)
+
+Follow these steps in order.
+
+### Step A1 — Load the dataset
+
+- Open `data.csv`
+- Read every row: mileage \(x\), price \(y\)
+- Keep \(m =\) number of rows
+
+### Step A2 — (Recommended) Normalize mileages
+
+\[
+x_{\text{norm}}^{(i)} = \frac{x^{(i)} - x_{\min}}{x_{\max} - x_{\min}}
+\]
+
+Save \(x_{\min}\) and \(x_{\max}\) — you need them later.
+
+### Step A3 — Initialize parameters
+
+\[
+\theta_0 = 0, \quad \theta_1 = 0
+\]
+
+Choose \(\alpha\) (learning rate) and \(N\) (iterations).  
+With normalized \(x\), \(\alpha\) like \(0.1\) often works.  
+With raw km, \(\alpha\) must be tiny (and convergence is harder).
+
+### Step A4 — One training iteration
+
+For every example \(i = 0 \ldots m-1\):
+
+1. Predict: \(h = \theta_0 + \theta_1 \cdot x^{(i)}\)  
+2. Error: \(e = h - y^{(i)}\)  
+3. Accumulate:
+   - \(S_1 += e\)
+   - \(S_2 += e \cdot x^{(i)}\)
+
+Then:
+
+4. \(\text{tmp\_}\theta_0 = \alpha \cdot (1/m) \cdot S_1\)  
+5. \(\text{tmp\_}\theta_1 = \alpha \cdot (1/m) \cdot S_2\)  
+6. Update simultaneously:
+   - \(\theta_0 \leftarrow \theta_0 - \text{tmp\_}\theta_0\)
+   - \(\theta_1 \leftarrow \theta_1 - \text{tmp\_}\theta_1\)
+
+### Step A5 — Repeat Step A4
+
+Do this \(N\) times.
+
+**Watch the cost \(J\):**
+
+- start: usually very high (predictions near 0)  
+- middle: should decrease  
+- end: much lower, and values should stabilize  
+
+If \(J\) barely moves → \(\alpha\) too small or not enough iterations.  
+If \(J\) becomes `nan` → \(\alpha\) too large.
+
+### Step A6 — (If you normalized) Convert \(\theta\) back to raw km
+
+You trained:
+
+\[
+\text{price} = \theta_{0_{\text{norm}}} + \theta_{1_{\text{norm}}} \cdot \frac{km - km_{\min}}{km_{\max} - km_{\min}}
+\]
+
+Expand to get a formula on raw `km`:
+
+\[
+\theta_1 = \frac{\theta_{1_{\text{norm}}}}{km_{\max} - km_{\min}}
+\]
+
+\[
+\theta_0 = \theta_{0_{\text{norm}}} - \theta_1 \cdot km_{\min}
+\]
+
+Now prediction matches the subject formula:
+
+\[
+\text{price} = \theta_0 + \theta_1 \cdot km
+\]
+
+### Step A7 — Save \(\theta_0\) and \(\theta_1\)
+
+Store them so the prediction program can load them later.
+
+### Step A8 — Sanity checks
+
+Good signs:
+
+- \(\theta_1 < 0\) (more km → lower price)  
+- \(\theta_0\) in the thousands (rough base price)  
+- final \(J\) much smaller than starting \(J\)  
+- predictions look realistic (e.g. 150 000 km → around a few thousand €)
+
+---
+
+# Part 4 — Prediction steps (Phase B)
+
+No cost. No gradient. Only the hypothesis.
+
+### Step B1 — Load trained \(\theta_0, \theta_1\)
+
+### Step B2 — Ask the user for a mileage
+
+### Step B3 — Apply the hypothesis
+
+\[
+\text{estimated price} = \theta_0 + \theta_1 \cdot \text{mileage}
+\]
+
+### Step B4 — Display the result
+
+That is the whole mandatory prediction program.
+
+---
+
+# Part 5 — End-to-end map
 
 ```text
-1. Open data.csv
-2. Set θ0 = 0, θ1 = 0
-3. Repeat N times (e.g. 100 000):
-      - for each car: prediction, error
-      - compute S1 and S2
-      - update θ0 and θ1
-4. Save final θ0 and θ1 (to a file)
-```
-
-**Input:** the 24 cars  
-**Output:** learned θ0 and θ1
-
-## Phase B — Prediction (as often as you want)
-
-```text
-1. Load θ0 and θ1 (from phase A)
-2. Ask the user for a mileage
-3. Compute: price = θ0 + θ1 × km
-4. Display the result
-```
-
-**Example** with θ0 = 8000, θ1 = −0.02, km = 150 000:
-
-```
-price = 8000 + (−0.02 × 150000) = 8000 − 3000 = 5000 €
-```
-
-**Input:** one km + saved θ  
-**Output:** one estimated price
-
----
-
-# Chapter 7 — Overview diagram
-
-```text
-┌─────────────────────────────────────────────────────────┐
-│                    YOUR PROJECT                         │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│   data.csv (24 cars)                                    │
-│        │                                                │
-│        ▼                                                │
-│   ┌─────────────┐                                       │
-│   │  TRAINING   │  ← Gradient descent                   │
-│   │  (Phase A)  │  ← Minimize MSE                       │
-│   └──────┬──────┘                                       │
-│          │                                              │
-│          ▼                                              │
-│      θ0, θ1  (learned parameters)                      │
-│          │                                              │
-│          ▼                                              │
-│   ┌─────────────┐                                       │
-│   │ PREDICTION  │  ← Formula: θ0 + θ1 × km              │
-│   │  (Phase B)  │                                       │
-│   └──────┬──────┘                                       │
-│          │                                              │
-│          ▼                                              │
-│      Estimated price (€)                                │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
+data.csv
+   │
+   ▼
+[optional] normalize km → x in [0, 1]
+   │
+   ▼
+initialize θ0=0, θ1=0
+   │
+   ▼
+repeat N times:
+   for each car:
+      prediction = θ0 + θ1·x
+      error = prediction - price
+   update θ0, θ1 with gradient descent
+   │
+   ▼
+[optional] denormalize θ → formula on raw km
+   │
+   ▼
+save θ0, θ1
+   │
+   ▼
+PREDICT: price = θ0 + θ1 · user_km
 ```
 
 ---
 
-# Chapter 8 — Cheat sheet
+# Part 6 — Bonus ideas (subject)
 
-| Concept | Formula | Role |
-|---------|---------|------|
-| **Hypothesis** | ŷ = θ0 + θ1·x | Predict price |
-| **Error** | ŷ − y | Gap on 1 car |
-| **MSE** | (1/m)·Σ(ŷ−y)² | Global gap |
-| **Gradient θ0** | (1/m)·Σ(ŷ−y) | How to adjust θ0 |
-| **Gradient θ1** | (1/m)·Σ(ŷ−y)·x | How to adjust θ1 |
-| **Update** | θ := θ − α·gradient | One descent step |
+Only evaluated if the mandatory part is perfect.
+
+1. **Plot the data** — scatter of km vs price  
+2. **Plot the regression line** — same graph, line \(y = \theta_0 + \theta_1 x\)  
+3. **Precision program** — measure how good the model is, for example:
+
+\[
+\text{MSE} = J(\theta_0, \theta_1)
+\]
+
+\[
+\text{RMSE} = \sqrt{\text{MSE}}
+\]
+
+\[
+\text{MAE} = \frac{1}{m}\sum |h(x_i) - y_i|
+\]
+
+\[
+R^2 = 1 - \frac{\sum (y_i - h(x_i))^2}{\sum (y_i - \bar{y})^2}
+\]
 
 ---
 
-# What to remember
+# Part 7 — What the peer review checks
 
-1. **Linear regression** = find a line: price = θ0 + θ1×km.
-2. **θ0 and θ1** are unknown at first; training finds them.
-3. **MSE** measures model quality; we minimize it.
-4. **Gradient descent** adjusts θ0 and θ1 little by little, iteration after iteration.
-5. **Learning rate** = step size; not too big, not too small.
-6. **Phase A** (train) before **Phase B** (predict): learn once, predict many times.
+- no library that does the regression for you (e.g. `numpy.polyfit` is cheating)  
+- correct hypothesis \(h(x) = \theta_0 + \theta_1 x\)  
+- correct training formulas from the subject  
+- simultaneous update of \(\theta_0\) and \(\theta_1\)  
+- \(\theta\) start at 0 before training  
 
 ---
 
-*Related files in this repo: `train.py`, `predict.py`, `data.csv`*
+# Part 8 — Cheat sheet
+
+| Concept | Formula / fact |
+|---------|----------------|
+| Hypothesis | \(h=\theta_0+\theta_1 x\) |
+| Bias | \(\theta_0\) |
+| Weight | \(\theta_1\) |
+| Error | \(h-y\) |
+| Squared error | \((h-y)^2\) |
+| Cost / MSE | \(J=\frac{1}{m}\sum(h-y)^2\) |
+| Grad \(\theta_0\) | \(\frac{1}{m}\sum(h-y)\) |
+| Grad \(\theta_1\) | \(\frac{1}{m}\sum(h-y)x\) |
+| Update | \(\theta \leftarrow \theta - \alpha\cdot\text{grad}\) |
+| Learning rate | step size \(\alpha\) |
+| Normalize | \(x'=(x-x_{\min})/(x_{\max}-x_{\min})\) |
+| Denormalize \(\theta\) | \(\theta_1=\theta_{1n}/\Delta\), \(\theta_0=\theta_{0n}-\theta_1 x_{\min}\) |
+| Predict | \(\theta_0+\theta_1\cdot km\) |
+
+---
+
+# Part 9 — Common mistakes
+
+1. Updating \(\theta_0\) then using the **new** \(\theta_0\) to update \(\theta_1\) (must be simultaneous)  
+2. Confusing \(m\) (examples) with number of iterations  
+3. Learning rate too small → cost flat; too large → `nan`  
+4. Predicting before training (or with \(\theta=0\))  
+5. Training on normalized \(x\) but forgetting to denormalize \(\theta\) before predicting raw km  
+6. Expecting \(\theta_1 > 0\) — on this dataset it should be negative  
+
+---
+
+# What to remember in one page
+
+1. **Linear regression** = fit a line price ≈ \(\theta_0 + \theta_1\cdot km\)  
+2. **\(\theta_0\)** = bias, **\(\theta_1\)** = weight  
+3. **MSE / cost \(J\)** measures how wrong the line is  
+4. **Gradient descent** reduces \(J\) by updating \(\theta\) each iteration  
+5. **Learning rate** controls step size  
+6. **Normalize** km if raw values prevent convergence, then convert \(\theta\) back  
+7. **Train once**, then **predict** as many times as you want  
+
+---
+
+*Related project files: `data.csv`, `subject.pdf`, `train.py`, `predict.py`*
